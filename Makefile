@@ -1,4 +1,4 @@
-# GNU toolchain assumed.
+# GNU-compatible toolchain assumed.
 
 PROGS := test_coalescing_pool
 all: $(PROGS)
@@ -22,8 +22,10 @@ check-coverage: clean test_coalescing_pool
 	./test_coalescing_pool --log_level=test_suite
 	gcov test_coalescing_pool.cpp
 
-test_coalescing_pool: CXXFLAGS += -O0
-test_coalescing_pool: test_coalescing_pool.cpp coalescing_pool.hpp
+test_coalescing_pool.o: CXXFLAGS += -O0
+test_coalescing_pool.o: test_coalescing_pool.cpp coalescing_pool.hpp
+test_coalescing_pool: CC = $(CXX)
+test_coalescing_pool: test_coalescing_pool.o
 
 clean:
 	rm -fv $(PROGS) *.o *.gcno *.gcda *.gcov
