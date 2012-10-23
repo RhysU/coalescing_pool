@@ -22,6 +22,7 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <boost/intrusive/link_mode.hpp>
 #include <boost/intrusive/set_hook.hpp>
 #include <boost/intrusive/set.hpp>
 #include <boost/next_prior.hpp>
@@ -42,7 +43,17 @@ template <typename T>
 struct coalescing_pool_policy
 {
     /** Should all newly allocated arenas be zeroed? */
-    static const bool zero_new_arenas = true;
+    static const bool zero_new_arenas
+            = true;
+
+    /**
+     * What Boost Intrusive linking mode should be used for free list entries?
+     * Valid options are \c normal_link, \c safe_link, or \c auto_unlink.
+     *
+     * @see Boost Intrusive for more details.
+     */
+    static const ::boost::intrusive::link_mode_type link_mode_type
+            = boost::intrusive::normal_link;
 };
 
 /**
@@ -469,7 +480,7 @@ private:
     class fl_entry
         : public blocks,
           public ::boost::intrusive::set_base_hook<
-                ::boost::intrusive::link_mode< ::boost::intrusive::normal_link>
+                ::boost::intrusive::link_mode<Policy::link_mode_type>
           >
     {
     public:
