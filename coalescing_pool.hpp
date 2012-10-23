@@ -286,7 +286,7 @@ public:
         size_type nelems() const { return ::std::distance(b_, e_); }
 
         /** Set the memory contained by this instance to zero. */
-        void zero() { ::std::memset(b_, 0, ::std::distance(b_,e_)*sizeof(T)); }
+        void zero() { ::std::memset(b_, 0, nelems()*sizeof(T)); }
 
         /** Is this instance equivalent to another? */
         bool operator==(const blocks& o) const {
@@ -699,7 +699,7 @@ void coalescing_pool<T,ArenaAllocator,Policy>::release(
 
     const typename arenas_type::iterator end = arenas.end();
     typename arenas_type::iterator i = ::std::lower_bound(
-            arenas.begin(), end, ::std::distance(b.b_, b.e_), compare_extents());
+            arenas.begin(), end, b.nelems(), compare_extents());
     for (; i != end; ++i) {
         if (i->contains(b)) {
 
