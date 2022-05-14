@@ -1,7 +1,7 @@
-coalescing_pool
-===============
+coalescing\_pool
+================
 
-[![Build Status](https://travis-ci.com/RhysU/coalescing_pool.svg?branch=master)](https://travis-ci.com/github/RhysU/coalescing_pool)
+[![Build Status](https://circleci.com/gh/RhysU/coalescing_pool.svg?style=shield)](https://app.circleci.com/pipelines/github/RhysU/coalescing_pool)
 
 <code>coalescing\_pool</code> is a free list-based memory pool designed for
 memory-constrained situations where large, contiguous blocks are repeatedly
